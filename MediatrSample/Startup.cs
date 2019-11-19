@@ -40,8 +40,9 @@ namespace MediatrSample
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
+            // Only the next 2 lines are needed if you're not doing property injection
             //services.AddMvc();
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup).Assembly);
 
             // https://stackoverflow.com/questions/50479616/how-to-use-property-injection-in-mvc-core-and-autofac
 

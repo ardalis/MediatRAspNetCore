@@ -6,14 +6,19 @@ namespace MediatrSample.Api.Movie
 {
 
     [Route("/[controller]/[action]")]
-    public class MovieController : BaseApiController
+    public class Movie2Controller : Controller
     {
+        private readonly IMediator _mediator;
+
+        public Movie2Controller(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpPost]
-        [Ardalis.Filters.ValidateModel]
         public async Task<IActionResult> Create([FromBody]NewMovieCommand command)
         {
-            // var result = await _mediator.Send(command);
-            var result = await Mediator.Send(command);
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }
