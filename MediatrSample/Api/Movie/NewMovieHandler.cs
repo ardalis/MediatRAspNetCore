@@ -7,12 +7,24 @@ namespace MediatrSample.Api.Movie
 
     public class NewMovieHandler : IRequestHandler<NewMovieCommand,Movie>
     {
-        Task<Movie> IRequestHandler<NewMovieCommand, Movie>.Handle(NewMovieCommand request, 
+        private readonly IMovieRepository _movieRepository;
+
+        public NewMovieHandler(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
+
+        Task<Movie> IRequestHandler<NewMovieCommand, Movie>.Handle(NewMovieCommand newMovieCommand, 
             CancellationToken cancellationToken)
         {
-            // TODO: real work here like saving the movie
+            var movie = new Movie
+            {
+                Id = newMovieCommand.Id,
+                Name = newMovieCommand.Name
+            };
+            _movieRepository.Create(movie);
 
-            return Task.FromResult(new Movie { Id = request.Id, Name = request.Name });
+            return Task.FromResult(movie);
         }
     }
 }

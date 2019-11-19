@@ -15,6 +15,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using MediatrSample.Api.Movie;
 
 namespace MediatrSample
 {
@@ -39,6 +40,7 @@ namespace MediatrSample
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
 
             // Only the next 2 lines are needed if you're not doing property injection
             //services.AddMvc();
