@@ -42,6 +42,12 @@ namespace MediatrSample
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IMovieRepository, MovieRepository>();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+
+
             // Only the next 2 lines are needed if you're not doing property injection
             //services.AddMvc();
             services.AddMediatR(typeof(Startup).Assembly);
@@ -76,6 +82,16 @@ namespace MediatrSample
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc(routes =>
             {
